@@ -45,18 +45,9 @@ cd backend && php artisan test    # 25 tests: unit (attention rule) + feature (A
 cd frontend && npm test           # 25 tests: components + integration + due-date util
 ```
 
-## Assumptions
-
-- Past due dates are allowed on create (e.g. backfilled tasks show as overdue immediately).
-- Priority has 3 levels (low/medium/high), status has 2 (open/completed) — no sub-tasks, no assignees.
-- Marking a task complete removes it from the "All open" view immediately.
-- No auth/multi-user support — all tasks are global.
-- CORS is left open (`*`) since this is a local exercise, not a deployed service.
-
 ## Limitations / what I'd do with more time
 
 - "Needs attention" filtering/sorting happens in PHP over all matching rows — fine at this scale, would move to SQL/an indexed column at real scale.
 - No pagination on `GET /api/tasks`.
 - No optimistic-UI rollback if a `PATCH`/`DELETE` fails mid-flight.
 - No automated E2E suite (verified manually instead).
-- No timezone handling — due dates use the browser's local time.

@@ -1,14 +1,7 @@
-import type { Task } from '../api/tasks'
 import { formatDueDate, formatDueDateExact } from '../utils/dueDate'
 import { attentionIcon, attentionLabel } from './attention'
 
-interface TaskItemProps {
-  task: Task
-  onToggleStatus: (task: Task) => void
-  onDelete: (task: Task) => void
-}
-
-export function TaskItem({ task, onToggleStatus, onDelete }: TaskItemProps) {
+export function TaskItem({ task, onToggleStatus, onDelete }) {
   const label = attentionLabel(task.attention_reason)
   const icon = attentionIcon(task.attention_reason)
   const isCompleted = task.status === 'completed'

@@ -3,12 +3,12 @@
 A task list where the backend automatically **surfaces which tasks need attention** (open-ended acceptance criterion, interpreted below).
 
 - **Backend:** Laravel 13 (PHP 8.3+), SQLite, PHPUnit
-- **Frontend:** React 19 + TypeScript (Vite), Vitest + React Testing Library
+- **Frontend:** React 19 (Vite), Vitest + React Testing Library
 
 ```
 task-tracker/
 ├── backend/   Laravel API
-└── frontend/  React + TypeScript UI
+└── frontend/  React UI
 ```
 
 ## Setup and run
@@ -52,13 +52,6 @@ cd frontend && npm test           # 25 tests: components + integration + due-dat
 - Marking a task complete removes it from the "All open" view immediately.
 - No auth/multi-user support — all tasks are global.
 - CORS is left open (`*`) since this is a local exercise, not a deployed service.
-
-## Key technical decisions
-
-- **"Needs attention" rule** (the open-ended part): a task is flagged as `overdue` (past due), `due_soon` (due within 24h), or `high_priority_upcoming` (high priority, due within 3 days) — completed tasks and tasks with no due date are never flagged. Boundaries are inclusive; `overdue` wins if multiple reasons apply. See `TaskAttentionService` + its unit tests for the exact rule and edge cases.
-- The flag is **computed per request, not stored**, so it can't go stale.
-- **SQLite over a heavier DB** — this is a single-table feature with no relations; SQLite gives a clone-and-run setup with no infrastructure to install.
-- **Due dates render as relative phrases** ("Overdue by 2d", "Due in 3h") for at-a-glance urgency, falling back to an absolute date beyond ~2 weeks.
 
 ## Limitations / what I'd do with more time
 

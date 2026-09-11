@@ -2,7 +2,7 @@ const MINUTE = 60_000
 const HOUR = 60 * MINUTE
 const DAY = 24 * HOUR
 
-function absolute(date: Date): string {
+function absolute(date) {
   return date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
 }
 
@@ -12,8 +12,12 @@ function absolute(date: Date): string {
  * carefully. Falls back to an absolute date once it's far enough away (or
  * far enough in the past) that "in/by N units" stops being useful at a
  * glance.
+ *
+ * @param {string | null} dueDate
+ * @param {Date} [now]
+ * @returns {string}
  */
-export function formatDueDate(dueDate: string | null, now: Date = new Date()): string {
+export function formatDueDate(dueDate, now = new Date()) {
   if (!dueDate) return 'No due date'
 
   const date = new Date(dueDate)
@@ -39,7 +43,11 @@ export function formatDueDate(dueDate: string | null, now: Date = new Date()): s
   return overdue ? `Was due ${absolute(date)}` : `Due ${absolute(date)}`
 }
 
-/** Full timestamp, for a tooltip alongside the short phrase above. */
-export function formatDueDateExact(dueDate: string | null): string | undefined {
+/**
+ * Full timestamp, for a tooltip alongside the short phrase above.
+ * @param {string | null} dueDate
+ * @returns {string | undefined}
+ */
+export function formatDueDateExact(dueDate) {
   return dueDate ? absolute(new Date(dueDate)) : undefined
 }

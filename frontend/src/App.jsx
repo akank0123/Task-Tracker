@@ -1,24 +1,24 @@
 import { useCallback, useEffect, useState } from 'react'
 import './App.css'
-import { ApiError, createTask, deleteTask, listTasks, updateTask, type Task } from './api/tasks'
-import { FilterBar, type FilterOption } from './components/FilterBar'
+import { ApiError, createTask, deleteTask, listTasks, updateTask } from './api/tasks'
+import { FilterBar } from './components/FilterBar'
 import { TaskForm } from './components/TaskForm'
 import { TaskList } from './components/TaskList'
 
-function filterToQuery(filter: FilterOption) {
-  if (filter === 'needs_attention') return { needsAttention: true } as const
-  if (filter === 'completed') return { status: 'completed' } as const
-  return { status: 'open' } as const
+function filterToQuery(filter) {
+  if (filter === 'needs_attention') return { needsAttention: true }
+  if (filter === 'completed') return { status: 'completed' }
+  return { status: 'open' }
 }
 
 function App() {
-  const [filter, setFilter] = useState<FilterOption>('all')
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [filter, setFilter] = useState('all')
+  const [tasks, setTasks] = useState([])
   const [attentionCount, setAttentionCount] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState(null)
 
-  const refresh = useCallback(async (currentFilter: FilterOption) => {
+  const refresh = useCallback(async (currentFilter) => {
     setLoading(true)
     setError(null)
     try {
@@ -40,7 +40,7 @@ function App() {
     refresh(filter)
   }, [filter, refresh])
 
-  async function handleCreate(input: Parameters<typeof createTask>[0]) {
+  async function handleCreate(input) {
     try {
       await createTask(input)
       await refresh(filter)
@@ -50,7 +50,7 @@ function App() {
     }
   }
 
-  async function handleToggleStatus(task: Task) {
+  async function handleToggleStatus(task) {
     const nextStatus = task.status === 'completed' ? 'open' : 'completed'
     setTasks((prev) => prev.map((t) => (t.id === task.id ? { ...t, status: nextStatus } : t)))
     try {
@@ -60,7 +60,7 @@ function App() {
     }
   }
 
-  async function handleDelete(task: Task) {
+  async function handleDelete(task) {
     setTasks((prev) => prev.filter((t) => t.id !== task.id))
     try {
       await deleteTask(task.id)

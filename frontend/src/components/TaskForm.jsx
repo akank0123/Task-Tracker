@@ -1,21 +1,16 @@
-import { useState, type FormEvent } from 'react'
-import type { NewTaskInput, Priority } from '../api/tasks'
+import { useState } from 'react'
 
-interface TaskFormProps {
-  onSubmit: (input: NewTaskInput) => Promise<void>
-}
+const PRIORITIES = ['low', 'medium', 'high']
 
-const PRIORITIES: Priority[] = ['low', 'medium', 'high']
-
-export function TaskForm({ onSubmit }: TaskFormProps) {
+export function TaskForm({ onSubmit }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [priority, setPriority] = useState<Priority>('medium')
+  const [priority, setPriority] = useState('medium')
   const [dueDate, setDueDate] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
 
-  async function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event) {
     event.preventDefault()
 
     if (!title.trim()) {
@@ -70,11 +65,7 @@ export function TaskForm({ onSubmit }: TaskFormProps) {
       <div className="task-form__inline">
         <div className="task-form__row">
           <label htmlFor="task-priority">Priority</label>
-          <select
-            id="task-priority"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value as Priority)}
-          >
+          <select id="task-priority" value={priority} onChange={(e) => setPriority(e.target.value)}>
             {PRIORITIES.map((p) => (
               <option key={p} value={p}>
                 {p[0].toUpperCase() + p.slice(1)}

@@ -3,10 +3,9 @@ import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import App from './App'
 import * as api from './api/tasks'
-import type { Task } from './api/tasks'
 
 vi.mock('./api/tasks', async () => {
-  const actual = await vi.importActual<typeof import('./api/tasks')>('./api/tasks')
+  const actual = await vi.importActual('./api/tasks')
   return {
     ...actual,
     listTasks: vi.fn(),
@@ -16,7 +15,7 @@ vi.mock('./api/tasks', async () => {
   }
 })
 
-function makeTask(overrides: Partial<Task> = {}): Task {
+function makeTask(overrides = {}) {
   return {
     id: 1,
     title: 'Sample task',
@@ -103,7 +102,7 @@ describe('App', () => {
 
     mockedApi.listTasks.mockResolvedValue([])
 
-    const item = screen.getByText('Doomed task').closest('li')!
+    const item = screen.getByText('Doomed task').closest('li')
     await user.click(within(item).getByRole('button', { name: 'Delete' }))
 
     expect(mockedApi.deleteTask).toHaveBeenCalledWith(9)

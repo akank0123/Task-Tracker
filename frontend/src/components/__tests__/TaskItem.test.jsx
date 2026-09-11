@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
-import type { Task } from '../../api/tasks'
 import { TaskItem } from '../TaskItem'
 
-function makeTask(overrides: Partial<Task> = {}): Task {
+function makeTask(overrides = {}) {
   return {
     id: 1,
     title: 'Write tests',

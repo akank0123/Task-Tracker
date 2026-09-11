@@ -1,13 +1,6 @@
-import type { Task } from '../api/tasks'
 import { TaskItem } from './TaskItem'
 
-interface TaskListProps {
-  tasks: Task[]
-  onToggleStatus: (task: Task) => void
-  onDelete: (task: Task) => void
-}
-
-export function TaskList({ tasks, onToggleStatus, onDelete }: TaskListProps) {
+export function TaskList({ tasks, onToggleStatus, onDelete }) {
   if (tasks.length === 0) {
     return (
       <div className="task-list__empty">

@@ -1,18 +1,10 @@
-export type FilterOption = 'all' | 'needs_attention' | 'completed'
-
-interface FilterBarProps {
-  value: FilterOption
-  onChange: (value: FilterOption) => void
-  needsAttentionCount: number
-}
-
-const OPTIONS: { value: FilterOption; label: string; icon: string }[] = [
+const OPTIONS = [
   { value: 'all', label: 'All open', icon: '📋' },
   { value: 'needs_attention', label: 'Needs attention', icon: '⚠' },
   { value: 'completed', label: 'Completed', icon: '✓' },
 ]
 
-export function FilterBar({ value, onChange, needsAttentionCount }: FilterBarProps) {
+export function FilterBar({ value, onChange, needsAttentionCount }) {
   return (
     <div className="filter-bar" role="tablist" aria-label="Task filters">
       {OPTIONS.map((option) => (
